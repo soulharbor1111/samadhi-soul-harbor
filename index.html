@@ -68,9 +68,23 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* 太陽光芒 */
+        #logo-video {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: transparent;
+            object-fit: contain;
+            box-shadow: 0 0 18px #48216b88;
+            opacity: 1;
+            z-index: 2;
+        }
+
+        /* 太陽光芒（如果影片本身有光芒可移除此區） */
         .sun-rays {
             position: absolute;
             width: 100%;
@@ -78,6 +92,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            z-index: 1;
         }
 
         .ray {
@@ -101,66 +116,6 @@
         .ray:nth-child(10) { width: 3px; height: 15px; top: 50%; left: 0; transform: translateY(-50%) rotate(270deg); }
         .ray:nth-child(11) { width: 4px; height: 22px; top: 35px; left: 8px; transform: rotate(300deg); }
         .ray:nth-child(12) { width: 3px; height: 18px; top: 15px; left: 25px; transform: rotate(330deg); }
-
-        /* 中心的眼睛符號 */
-        .eye-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-        }
-
-        .eye-outer {
-            width: 100px;
-            height: 60px;
-            border: 3px solid #e8e7ea;
-            border-radius: 50px 50px 50px 50px / 30px 30px 30px 30px;
-            position: relative;
-            background: transparent;
-            box-shadow: 0 0 15px rgba(232, 231, 234, 0.3);
-        }
-
-        .eye-waves {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 35px;
-        }
-
-        .wave-top, .wave-bottom {
-            position: absolute;
-            width: 70px;
-            height: 3px;
-            background: #e8e7ea;
-            border-radius: 35px;
-            box-shadow: 0 0 8px rgba(232, 231, 234, 0.4);
-        }
-
-        .wave-top {
-            top: 10px;
-            transform: rotate(-8deg);
-        }
-
-        .wave-bottom {
-            bottom: 10px;
-            transform: rotate(8deg);
-        }
-
-        .eye-dot {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            background: #e8e7ea;
-            border-radius: 50%;
-            box-shadow: 0 0 12px rgba(232, 231, 234, 0.6);
-        }
 
         #brand {
             font-family: 'Cinzel', 'Noto Sans TC', serif;
@@ -243,6 +198,7 @@
             #intro { font-size: 1rem; max-width: 320px; }
             #enter-btn { padding: 12px 30px; font-size: 1rem; }
             #logo-container { width: 140px; height: 140px; }
+            #logo-video { width: 140px; height: 140px; }
             #core-text { font-size: 1rem; }
         }
     </style>
@@ -252,6 +208,8 @@
     
     <div id="logo-area">
         <div id="logo-container">
+            <!-- Logo動畫影片：請確認logo-video.mp4已上傳在同資料夾 -->
+            <video id="logo-video" src="logo-video.mp4" autoplay muted loop playsinline></video>
             <div class="sun-rays">
                 <div class="ray"></div>
                 <div class="ray"></div>
@@ -265,15 +223,6 @@
                 <div class="ray"></div>
                 <div class="ray"></div>
                 <div class="ray"></div>
-            </div>
-            <div class="eye-center">
-                <div class="eye-outer">
-                    <div class="eye-waves">
-                        <div class="wave-top"></div>
-                        <div class="wave-bottom"></div>
-                        <div class="eye-dot"></div>
-                    </div>
-                </div>
             </div>
         </div>
         
@@ -310,11 +259,11 @@
             }
         }
 
-        // 優雅的動畫序列：logo淡入 -> 品牌字 -> 引導文案 -> 核心意識文字 -> 按鈕
+        // 優雅的動畫序列：logo影片淡入 -> 品牌字 -> 引導文案 -> 核心意識文字 -> 按鈕
         window.addEventListener('load', function() {
             createAncientSymbols();
             
-            // Logo淡入
+            // Logo影片淡入
             setTimeout(() => {
                 document.getElementById('logo-container').style.opacity = '1';
             }, 400);
@@ -345,7 +294,7 @@
             }, 3200);
         });
 
-        // 進入網站（保留你的code並整合動畫）
+        // 進入網站
         document.getElementById('enter-btn').onclick = function() {
             // 核心意識文字慢慢淡出
             document.getElementById('core-text').classList.add('core-fade-out');
