@@ -28,7 +28,6 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            /* 深紫藍漸層背景，延展影片色彩 */
             background: radial-gradient(ellipse at 60% 30%, #000000 0%, #124170 35%, #113F67 65%, #471396 100%);
             font-family: 'JF-LanYangMing-Book', 'Arial', 'Noto Sans TC', sans-serif;
         }
@@ -45,12 +44,11 @@
             position: absolute;
             user-select: none;
             pointer-events: none;
-            opacity: 0.8;
-            transition: opacity 1s;
+            transition: opacity 1.6s, left 2.6s, top 2.6s, width 1.8s;
             z-index: 2;
             filter: drop-shadow(0 2px 12px #47139688);
+            will-change: opacity, left, top, width;
         }
-        .symbol { display: none; }
         #logo-area {
             position: absolute;
             left: 50%;
@@ -63,15 +61,15 @@
             width: 100vw;
         }
         #logo-container {
-            width: 360px;
-            height: 200px;
+            width: 350px;
+            height: 350px;
             opacity: 0;
             transition: opacity 1.5s cubic-bezier(.5,.2,.1,1);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 54px; /* 與下方文字有距離 */
+            margin-bottom: 54px;
         }
         #logo-video {
             width: 100%;
@@ -80,44 +78,66 @@
             object-fit: cover;
             opacity: 1;
             z-index: 2;
-            border-radius: 0; /* 完全無圓角 */
-            box-shadow: none; /* 無光暈、無邊框 */
+            border-radius: 0;
+            box-shadow: none;
+            aspect-ratio: 1 / 1;
+            max-width: 100vw;
+            max-height: 60vh;
         }
         #intro {
             margin-top: 0;
-            font-size: 1.13rem;
+            margin-bottom: 32px;
+            font-size: 1.2rem;
             color: #e8e7ea;
             text-align: center;
             opacity: 0;
-            transition: opacity 1s cubic-bezier(.5,.2,.1,1);
             max-width: 480px;
             text-shadow: 0 1px 8px #08041a;
             line-height: 1.7;
             font-family: 'JF-LanYangMing-Book', 'Noto Sans TC', 'Arial', sans-serif;
-            font-style: italic;
+            font-style: normal;
             font-weight: normal;
+            letter-spacing: 0.05em;
+            animation: fadeFlicker 3.4s ease-in-out infinite;
+            animation-delay: 1.2s;
         }
         #core-text {
-            font-size: 1.25rem;
+            font-size: 1.32rem;
             color: #fff;
-            margin-top: 36px;
+            margin-top: 32px;
             text-align: center;
             opacity: 0;
-            transition: opacity 1.3s, transform 1.2s;
-            letter-spacing: 0.08em;
             font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
-            font-style: italic;
+            font-style: normal;
             font-weight: bold;
+            letter-spacing: 0.08em;
+            animation: fadeFlicker 3.4s ease-in-out infinite;
+            animation-delay: 2.1s;
+        }
+        @keyframes fadeFlicker {
+            0%,100% { opacity: 0.5; filter: blur(0px);}
+            4% { opacity: 0.9; filter: blur(0px);}
+            7% { opacity: 0.62; filter: blur(0.5px);}
+            10% { opacity: 0.85; filter: blur(0px);}
+            24% { opacity: 1; filter: blur(0px);}
+            30% { opacity: 0.86; filter: blur(0.3px);}
+            42% { opacity: 0.64; filter: blur(0.5px);}
+            50% { opacity: 1; filter: blur(0px);}
+            60% { opacity: 0.78; filter: blur(0.2px);}
+            72% { opacity: 0.56; filter: blur(0.7px);}
+            80% { opacity: 0.92; filter: blur(0px);}
+            92% { opacity: 1; filter: blur(0px);}
         }
         .core-fade-out {
             opacity: 0 !important;
             transform: translateY(-25px) scale(1.05);
             transition: opacity 1.2s, transform 1.2s;
         }
+        /* 玻璃感按鈕 */
         #enter-btn {
-            margin-top: 48px;
-            padding: 16px 56px;
-            font-size: 1.22rem;
+            margin-top: 40px;
+            padding: 0.88em 3.2em;
+            font-size: 1.19rem;
             color: #fff;
             border: none;
             border-radius: 32px;
@@ -125,25 +145,18 @@
             opacity: 0;
             transition: all 0.5s cubic-bezier(.5,.2,.1,1);
             font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
-            background: rgba(255,255,255,0.09);
-            backdrop-filter: blur(16px) saturate(130%);
-            box-shadow: 0 4px 24px 0 rgba(71,19,150,0.10), 0 2px 8px 0 rgba(0,0,0,0.13);
-            border: 1.5px solid rgba(255,255,255,0.17);
-            letter-spacing: 2px;
+            background: rgba(255,255,255,0.13);
+            backdrop-filter: blur(14px) saturate(120%);
+            box-shadow: 0 2px 18px 0 rgba(71,19,150,0.12), 0 1px 4px 0 rgba(0,0,0,0.16);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            letter-spacing: 1.5px;
             font-weight: bold;
             position: relative;
             overflow: hidden;
-            /* 眨眼玻璃感動畫 */
             animation: btn-blink 2.8s cubic-bezier(.6,.1,.1,1) infinite;
         }
-        @keyframes btn-blink {
-            0%,100% { filter: brightness(1) blur(0px); box-shadow: 0 4px 24px 0 rgba(71,19,150,0.10), 0 2px 8px 0 rgba(0,0,0,0.13);}
-            48% { filter: brightness(1) blur(0px);}
-            51% { filter: brightness(0.7) blur(2.5px); box-shadow: 0 2px 12px 0 rgba(71,19,150,0.03), 0 1px 2px 0 rgba(0,0,0,0.09);}
-            54% { filter: brightness(1) blur(0px);}
-        }
         #enter-btn:hover {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.22);
             color: #fff;
             box-shadow: 0 8px 40px 0 rgba(71,19,150,0.18), 0 2px 16px 0 rgba(0,0,0,0.20);
             transform: translateY(-2px) scale(1.03);
@@ -151,7 +164,13 @@
         }
         #enter-btn:active {
             box-shadow: none;
-            background: rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.28);
+        }
+        @keyframes btn-blink {
+            0%,100% { filter: brightness(1) blur(0px); }
+            48% { filter: brightness(1) blur(0px);}
+            51% { filter: brightness(0.75) blur(2.5px);}
+            54% { filter: brightness(1) blur(0px);}
         }
         .pulse-animation {
             animation: pulse 2s ease-in-out infinite;
@@ -166,8 +185,8 @@
             transition: all 1s cubic-bezier(.5,.2,.1,1) !important;
         }
         @media (max-width: 768px) {
-            #logo-container { width: 99vw; max-width: 99vw; height: 30vw; min-height: 120px; }
-            #logo-video { width: 99vw; max-width: 99vw; height: 30vw; min-height: 120px; }
+            #logo-container { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
+            #logo-video { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
             #intro { font-size: .98rem; max-width: 92vw; }
             #core-text { font-size: 1.03rem; }
             #enter-btn { padding: 12px 18vw; font-size: 1rem; }
@@ -178,7 +197,7 @@
     <div id="bg-symbols"></div>
     <div id="logo-area">
         <div id="logo-container">
-            <video id="logo-video" src="logo-video.mp4" autoplay muted loop playsinline></video>
+            <video id="logo-video" src="logo-video.mp4" width="1080" height="1080" autoplay muted loop playsinline></video>
         </div>
         <div id="intro">
             我如水般流動著，漸漸靠近了你<br>
@@ -190,34 +209,51 @@
         <button id="enter-btn">✨ 我醒了 ✨</button>
     </div>
     <script>
-        // 漂浮的古文明圖騰（用圖片）
+        // 隨機星星閃爍移動
+        function randomSymbolProps() {
+            return {
+                left: Math.random() * 88 + 3,   // vw
+                top: Math.random() * 88 + 3,    // vh
+                width: 32 + Math.random() * 52, // px
+                opacity: 0.18 + Math.random() * 0.77
+            };
+        }
         function createAncientSymbols() {
             const bg = document.getElementById('bg-symbols');
             const symbolCount = 10;
+            window.symbolImgs = [];
             for(let i = 1; i <= symbolCount; i++) {
                 const img = document.createElement('img');
                 img.src = `symbol${i}.png`;
                 img.className = 'symbol-img';
-                img.style.left = `${Math.random() * 90 + 2}vw`;
-                img.style.top = `${Math.random() * 90 + 2}vh`;
-                img.style.width = `${28 + Math.random() * 34}px`;
-                img.style.opacity = `${0.40 + Math.random() * 0.5}`;
-                img.style.animation = `symbolFloatImg ${7 + Math.random()*3}s ease-in-out infinite`;
-                img.style.animationDelay = `${Math.random() * 5}s`;
+                const props = randomSymbolProps();
+                img.style.left = `${props.left}vw`;
+                img.style.top = `${props.top}vh`;
+                img.style.width = `${props.width}px`;
+                img.style.opacity = `${props.opacity}`;
+                img._symbolIndex = i;
                 bg.appendChild(img);
+                window.symbolImgs.push(img);
             }
+            animateSymbols();
         }
-
-        // 漂浮動畫
-        const style = document.createElement('style');
-        style.innerHTML = `
-        @keyframes symbolFloatImg {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateY(-18px) rotate(24deg); opacity: 1; }
+        function animateSymbols() {
+            window.symbolImgs.forEach(function(img) {
+                function move() {
+                    const props = randomSymbolProps();
+                    img.style.left = `${props.left}vw`;
+                    img.style.top = `${props.top}vh`;
+                    img.style.width = `${props.width}px`;
+                    img.style.opacity = "0";
+                    setTimeout(() => {
+                        img.style.opacity = `${props.opacity}`;
+                    }, 700 + Math.random()*400);
+                    const nextDelay = 1800 + Math.random()*2500;
+                    setTimeout(move, nextDelay);
+                }
+                setTimeout(move, 1200 + Math.random()*1800);
+            });
         }
-        `;
-        document.head.appendChild(style);
-
         window.addEventListener('load', function() {
             createAncientSymbols();
             setTimeout(() => {
@@ -226,7 +262,6 @@
             setTimeout(() => {
                 document.getElementById('intro').style.opacity = '1';
             }, 1100);
-            // 讓收束能量文字晚一點出現
             setTimeout(() => {
                 document.getElementById('core-text').style.opacity = '1';
             }, 1700);
@@ -237,7 +272,6 @@
                 document.getElementById('logo-area').classList.add('pulse-animation');
             }, 3200);
         });
-
         document.getElementById('enter-btn').onclick = function() {
             document.getElementById('core-text').classList.add('core-fade-out');
             this.innerHTML = '正在喚醒...';
