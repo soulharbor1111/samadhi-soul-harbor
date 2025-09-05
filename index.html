@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Samadhi Soul Harbor</title>
+    <!-- 字型載入 -->
+    <style>
+        @font-face {
+            font-family: 'JF-LanYangMing-Book';
+            src: url('jf-lanyangming-1.0-book.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'JF-LanYangMing-Semibold';
+            src: url('jf-lanyangming-1.0-semibold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+    </style>
     <style>
         * {
             margin: 0;
@@ -17,8 +32,9 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: radial-gradient(ellipse at 60% 50%, #48216b 0%, #08041a 100%);
-            font-family: 'Arial', 'Noto Sans TC', sans-serif;
+            /* 背景漸層，色碼：#000000、#124170、#113F67、#471396 */
+            background: linear-gradient(135deg, #000000 0%, #124170 35%, #113F67 65%, #471396 100%);
+            font-family: 'JF-LanYangMing-Book', 'Arial', 'Noto Sans TC', sans-serif;
         }
 
         #bg-symbols {
@@ -31,24 +47,18 @@
             z-index: 1;
         }
 
-        .symbol {
+        .symbol-img {
             position: absolute;
-            font-size: 30px;
-            color: rgba(110, 74, 180, 0.3);
             user-select: none;
-            animation: symbolFloat 8s ease-in-out infinite;
-            text-shadow: 0 2px 12px rgba(110, 74, 180, 0.5);
+            pointer-events: none;
+            opacity: 0.7;
+            transition: opacity 1s;
+            z-index: 2;
+            filter: drop-shadow(0 2px 12px #47139688);
         }
 
-        @keyframes symbolFloat {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg); 
-                opacity: 0.2; 
-            }
-            50% { 
-                transform: translateY(-20px) rotate(180deg); 
-                opacity: 0.6; 
-            }
+        .symbol {
+            display: none;
         }
 
         #logo-area {
@@ -59,7 +69,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 2;
+            z-index: 3;
         }
 
         #logo-container {
@@ -79,12 +89,11 @@
             border-radius: 50%;
             background: transparent;
             object-fit: contain;
-            box-shadow: 0 0 18px #48216b88;
+            box-shadow: 0 0 18px #47139688;
             opacity: 1;
             z-index: 2;
         }
 
-        /* 太陽光芒（如果影片本身有光芒可移除此區） */
         .sun-rays {
             position: absolute;
             width: 100%;
@@ -93,6 +102,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
+            /* 可移除如影片已含光芒 */
         }
 
         .ray {
@@ -103,7 +113,6 @@
             box-shadow: 0 0 10px rgba(232, 231, 234, 0.5);
         }
 
-        /* 12個光芒 */
         .ray:nth-child(1) { width: 4px; height: 25px; top: 0; left: 50%; transform: translateX(-50%) rotate(0deg); }
         .ray:nth-child(2) { width: 3px; height: 18px; top: 15px; right: 25px; transform: rotate(30deg); }
         .ray:nth-child(3) { width: 4px; height: 22px; top: 35px; right: 8px; transform: rotate(60deg); }
@@ -118,14 +127,15 @@
         .ray:nth-child(12) { width: 3px; height: 18px; top: 15px; left: 25px; transform: rotate(330deg); }
 
         #brand {
-            font-family: 'Cinzel', 'Noto Sans TC', serif;
+            font-family: 'JF-LanYangMing-Semibold', 'Cinzel', 'Noto Sans TC', serif;
+            font-weight: bold;
             letter-spacing: 0.15em;
             color: #e8e7ea;
             font-size: 2rem;
             margin-top: 24px;
             opacity: 0;
             transition: opacity 1s ease-in-out;
-            text-shadow: 0 3px 22px #000, 0 1px 0 #6e4ab4;
+            text-shadow: 0 3px 22px #000, 0 1px 0 #471396;
             text-align: center;
         }
 
@@ -139,9 +149,10 @@
             max-width: 400px;
             text-shadow: 0 1px 8px #08041a;
             line-height: 1.6;
+            font-family: 'JF-LanYangMing-Book', 'Noto Sans TC', 'Arial', sans-serif;
             font-style: italic;
         }
-        /* 新增核心意識文字樣式 */
+
         #core-text {
             font-size: 1.2rem;
             color: #e8e7ea;
@@ -150,6 +161,7 @@
             opacity: 0;
             transition: opacity 2.2s, transform 1.2s;
             letter-spacing: 0.08em;
+            font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
             font-style: italic;
         }
         .core-fade-out {
@@ -161,21 +173,22 @@
             margin-top: 40px;
             padding: 14px 40px;
             font-size: 1.2rem;
-            background: linear-gradient(90deg, #6e4ab4 0%, #48216b 100%);
+            background: linear-gradient(90deg, #471396 0%, #113F67 100%);
             color: #fff;
             border: none;
             border-radius: 40px;
             cursor: pointer;
             opacity: 0;
             transition: all 0.5s ease-in-out;
-            box-shadow: 0 2px 14px rgba(72, 49, 107, 0.6);
+            box-shadow: 0 2px 14px #47139699;
             letter-spacing: 1px;
+            font-family: 'JF-LanYangMing-Semibold', 'Cinzel', 'Noto Sans TC', serif;
         }
 
         #enter-btn:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(72, 49, 107, 0.8);
-            background: linear-gradient(90deg, #7d5bc7 0%, #5a2d7e 100%);
+            box-shadow: 0 6px 20px #471396dd;
+            background: linear-gradient(90deg, #113F67 0%, #471396 100%);
         }
 
         .pulse-animation {
@@ -241,75 +254,65 @@
     </div>
 
     <script>
-        // 創建漂浮的古文明符號
+        // 漂浮的古文明圖騰（用圖片）
         function createAncientSymbols() {
             const bg = document.getElementById('bg-symbols');
-            const ancientSymbols = ['⚛', '☯', '🕉', '⚡', '🔯', '☾', '☽', '⊕', '⊗', '◉', '◎', '⟡', '⟢', '◊', '◈', '⬢'];
-            
-            for(let i = 0; i < 12; i++) {
-                const symbol = document.createElement('div');
-                symbol.className = 'symbol';
-                symbol.textContent = ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)];
-                symbol.style.left = `${Math.random() * 90 + 5}vw`;
-                symbol.style.top = `${Math.random() * 90 + 5}vh`;
-                symbol.style.fontSize = `${20 + Math.random() * 25}px`;
-                symbol.style.animationDelay = `${Math.random() * 8}s`;
-                symbol.style.animationDuration = `${6 + Math.random() * 4}s`;
-                bg.appendChild(symbol);
+            const symbolCount = 10; // 你已上傳 symbol1-10
+            for(let i = 1; i <= symbolCount; i++) {
+                const img = document.createElement('img');
+                img.src = `symbol${i}.png`; // 檔名 symbol1.png, symbol2.png ... symbol10.png
+                img.className = 'symbol-img';
+                img.style.left = `${Math.random() * 90 + 5}vw`;
+                img.style.top = `${Math.random() * 90 + 5}vh`;
+                img.style.width = `${32 + Math.random() * 36}px`;
+                img.style.opacity = `${0.45 + Math.random() * 0.5}`;
+                img.style.animation = `symbolFloatImg ${6 + Math.random()*4}s ease-in-out infinite`;
+                img.style.animationDelay = `${Math.random() * 8}s`;
+                bg.appendChild(img);
             }
         }
 
-        // 優雅的動畫序列：logo影片淡入 -> 品牌字 -> 引導文案 -> 核心意識文字 -> 按鈕
+        // 圖騰漂浮動畫
+        const style = document.createElement('style');
+        style.innerHTML = `
+        @keyframes symbolFloatImg {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(30deg); opacity: 1; }
+        }
+        `;
+        document.head.appendChild(style);
+
         window.addEventListener('load', function() {
             createAncientSymbols();
-            
-            // Logo影片淡入
             setTimeout(() => {
                 document.getElementById('logo-container').style.opacity = '1';
             }, 400);
-
-            // 品牌名稱出現
             setTimeout(() => {
                 document.getElementById('brand').style.opacity = '1';
             }, 1100);
-
-            // 引導文案出現
             setTimeout(() => {
                 document.getElementById('intro').style.opacity = '1';
             }, 1600);
-
-            // 核心意識文字出現
             setTimeout(() => {
                 document.getElementById('core-text').style.opacity = '1';
             }, 2200);
-
-            // 按鈕出現
             setTimeout(() => {
                 document.getElementById('enter-btn').style.opacity = '1';
             }, 2800);
-
-            // Logo輕微脈動效果
             setTimeout(() => {
                 document.getElementById('logo-area').classList.add('pulse-animation');
             }, 3200);
         });
 
-        // 進入網站
         document.getElementById('enter-btn').onclick = function() {
-            // 核心意識文字慢慢淡出
             document.getElementById('core-text').classList.add('core-fade-out');
-            // 按鈕文字變化
             this.innerHTML = '正在喚醒...';
             this.style.background = 'linear-gradient(90deg, #FFD700, #fff)';
             this.style.color = '#000';
-            
             setTimeout(() => {
-                // 整體淡出效果
                 document.getElementById('logo-area').classList.add('fade-out');
                 document.getElementById('bg-symbols').style.opacity = '0';
-                
                 setTimeout(() => {
-                    // 這裡將跳轉到主網站
                     alert('歡迎進入 Samadhi Soul Harbor！\n（這裡將連接到您的主網站）');
                     // window.location.href = '/main-site';
                 }, 1000);
