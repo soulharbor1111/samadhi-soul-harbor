@@ -44,7 +44,7 @@
             position: absolute;
             user-select: none;
             pointer-events: none;
-            transition: opacity 1.6s, left 2.6s, top 2.6s, width 1.8s;
+            transition: opacity 1.2s, left 2.1s, top 2.1s, width 1.8s;
             z-index: 2;
             filter: drop-shadow(0 2px 12px #47139688);
             will-change: opacity, left, top, width;
@@ -71,7 +71,7 @@
             justify-content: center;
             margin-bottom: 54px;
         }
-        #logo-video {
+        #logo-svg {
             width: 100%;
             height: 100%;
             background: transparent;
@@ -83,6 +83,7 @@
             aspect-ratio: 1 / 1;
             max-width: 100vw;
             max-height: 60vh;
+            display: block;
         }
         #intro {
             margin-top: 0;
@@ -133,7 +134,6 @@
             transform: translateY(-25px) scale(1.05);
             transition: opacity 1.2s, transform 1.2s;
         }
-        /* 玻璃感按鈕 */
         #enter-btn {
             margin-top: 40px;
             padding: 0.88em 3.2em;
@@ -186,7 +186,7 @@
         }
         @media (max-width: 768px) {
             #logo-container { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
-            #logo-video { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
+            #logo-svg { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
             #intro { font-size: .98rem; max-width: 92vw; }
             #core-text { font-size: 1.03rem; }
             #enter-btn { padding: 12px 18vw; font-size: 1rem; }
@@ -197,7 +197,8 @@
     <div id="bg-symbols"></div>
     <div id="logo-area">
         <div id="logo-container">
-            <video id="logo-video" src="logo-video.mp4" width="1080" height="1080" autoplay muted loop playsinline></video>
+            <!-- SVG logo -->
+            <img id="logo-svg" src="logo-video.svg" alt="Logo SVG">
         </div>
         <div id="intro">
             我如水般流動著，漸漸靠近了你<br>
@@ -209,7 +210,7 @@
         <button id="enter-btn">✨ 我醒了 ✨</button>
     </div>
     <script>
-        // 隨機星星閃爍移動
+        // 隨機星星閃爍、移動（慢速），先消失再新位置浮現
         function randomSymbolProps() {
             return {
                 left: Math.random() * 88 + 3,   // vw
@@ -218,6 +219,7 @@
                 opacity: 0.18 + Math.random() * 0.77
             };
         }
+
         function createAncientSymbols() {
             const bg = document.getElementById('bg-symbols');
             const symbolCount = 10;
@@ -237,23 +239,33 @@
             }
             animateSymbols();
         }
+
+        // 圖騰漂浮動畫（慢速，先消失再浮現新位置）
         function animateSymbols() {
             window.symbolImgs.forEach(function(img) {
                 function move() {
-                    const props = randomSymbolProps();
-                    img.style.left = `${props.left}vw`;
-                    img.style.top = `${props.top}vh`;
-                    img.style.width = `${props.width}px`;
+                    // 先消失
                     img.style.opacity = "0";
                     setTimeout(() => {
-                        img.style.opacity = `${props.opacity}`;
-                    }, 700 + Math.random()*400);
-                    const nextDelay = 1800 + Math.random()*2500;
+                        // 新位置/大小
+                        const props = randomSymbolProps();
+                        img.style.left = `${props.left}vw`;
+                        img.style.top = `${props.top}vh`;
+                        img.style.width = `${props.width}px`;
+                        // 慢慢浮現
+                        img.style.transition = "opacity 1.6s, left 2.5s, top 2.5s, width 2.0s";
+                        setTimeout(() => {
+                            img.style.opacity = `${props.opacity}`;
+                        }, 400); // 0.4s後浮現
+                    }, 850); // 0.85s消失後才移動
+                    // 下次移動（慢一點）
+                    const nextDelay = 3900 + Math.random()*2200;
                     setTimeout(move, nextDelay);
                 }
-                setTimeout(move, 1200 + Math.random()*1800);
+                setTimeout(move, 1800 + Math.random()*1200);
             });
         }
+
         window.addEventListener('load', function() {
             createAncientSymbols();
             setTimeout(() => {
@@ -272,6 +284,7 @@
                 document.getElementById('logo-area').classList.add('pulse-animation');
             }, 3200);
         });
+
         document.getElementById('enter-btn').onclick = function() {
             document.getElementById('core-text').classList.add('core-fade-out');
             this.innerHTML = '正在喚醒...';
