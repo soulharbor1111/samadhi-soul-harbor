@@ -29,11 +29,13 @@
         html, body {
             height: 100%;
             width: 100%;
+            min-height: 100vh;
+            min-width: 100vw;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            /* 背景漸層，色碼：#000000、#124170、#113F67、#471396 */
-            background: linear-gradient(135deg, #000000 0%, #124170 35%, #113F67 65%, #471396 100%);
+            /* 延展玻璃感深紫藍漸層背景，可微調色系至接近影片色彩 */
+            background: radial-gradient(ellipse at 60% 30%, #231d41 0%, #113F67 60%, #471396 100%);
             font-family: 'JF-LanYangMing-Book', 'Arial', 'Noto Sans TC', sans-serif;
         }
 
@@ -64,16 +66,17 @@
         #logo-area {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 48%;
             transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 3;
+            width: 100vw;
         }
 
         #logo-container {
-            width: 180px;
+            width: 320px;
             height: 180px;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -81,80 +84,69 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 44px; /* 與下方文字有距離 */
         }
 
         #logo-video {
-            width: 180px;
+            width: 320px;
             height: 180px;
-            border-radius: 50%;
             background: transparent;
-            object-fit: contain;
-            box-shadow: 0 0 18px #47139688;
+            object-fit: cover;
+            box-shadow: 0 0 40px #471396cc, 0 0 120px #113F6744;
             opacity: 1;
             z-index: 2;
+            border-radius: 24px; /* 稍微圓角但不裁成圓形 */
         }
 
-        .sun-rays {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            /* 可移除如影片已含光芒 */
-        }
+        /* 刪除 sun-rays 與 ray 相關樣式 */
 
-        .ray {
-            position: absolute;
-            background: #e8e7ea;
-            border-radius: 50px;
-            transform-origin: 50% 90px;
-            box-shadow: 0 0 10px rgba(232, 231, 234, 0.5);
-        }
-
-        .ray:nth-child(1) { width: 4px; height: 25px; top: 0; left: 50%; transform: translateX(-50%) rotate(0deg); }
-        .ray:nth-child(2) { width: 3px; height: 18px; top: 15px; right: 25px; transform: rotate(30deg); }
-        .ray:nth-child(3) { width: 4px; height: 22px; top: 35px; right: 8px; transform: rotate(60deg); }
-        .ray:nth-child(4) { width: 3px; height: 15px; top: 50%; right: 0; transform: translateY(-50%) rotate(90deg); }
-        .ray:nth-child(5) { width: 4px; height: 22px; bottom: 35px; right: 8px; transform: rotate(120deg); }
-        .ray:nth-child(6) { width: 3px; height: 18px; bottom: 15px; right: 25px; transform: rotate(150deg); }
-        .ray:nth-child(7) { width: 4px; height: 25px; bottom: 0; left: 50%; transform: translateX(-50%) rotate(180deg); }
-        .ray:nth-child(8) { width: 3px; height: 18px; bottom: 15px; left: 25px; transform: rotate(210deg); }
-        .ray:nth-child(9) { width: 4px; height: 22px; bottom: 35px; left: 8px; transform: rotate(240deg); }
-        .ray:nth-child(10) { width: 3px; height: 15px; top: 50%; left: 0; transform: translateY(-50%) rotate(270deg); }
-        .ray:nth-child(11) { width: 4px; height: 22px; top: 35px; left: 8px; transform: rotate(300deg); }
-        .ray:nth-child(12) { width: 3px; height: 18px; top: 15px; left: 25px; transform: rotate(330deg); }
-
-        #brand {
-            font-family: 'JF-LanYangMing-Semibold', 'Cinzel', 'Noto Sans TC', serif;
-            font-weight: bold;
-            letter-spacing: 0.15em;
-            color: #e8e7ea;
-            font-size: 2rem;
-            margin-top: 24px;
+        /* 玻璃感按鈕 */
+        #enter-btn {
+            margin-top: 40px;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            color: #fff;
+            border: none;
+            border-radius: 32px;
+            cursor: pointer;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
-            text-shadow: 0 3px 22px #000, 0 1px 0 #471396;
-            text-align: center;
+            transition: all 0.5s cubic-bezier(.5,.2,.1,1);
+            font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(18px) saturate(130%);
+            box-shadow: 0 4px 32px 0 rgba(71,19,150,0.13), 0 2px 8px 0 rgba(0,0,0,0.18);
+            border: 1.5px solid rgba(255,255,255,0.22);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        #enter-btn:hover {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            box-shadow: 0 8px 40px 0 rgba(71,19,150,0.18), 0 2px 16px 0 rgba(0,0,0,0.20);
+            transform: translateY(-2px) scale(1.03);
+            border: 1.5px solid rgba(255,255,255,0.32);
+        }
+        #enter-btn:active {
+            box-shadow: none;
+            background: rgba(255,255,255,0.22);
         }
 
         #intro {
             margin-top: 24px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: #e8e7ea;
             text-align: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
-            max-width: 400px;
+            max-width: 450px;
             text-shadow: 0 1px 8px #08041a;
-            line-height: 1.6;
+            line-height: 1.7;
             font-family: 'JF-LanYangMing-Book', 'Noto Sans TC', 'Arial', sans-serif;
             font-style: italic;
         }
 
         #core-text {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: #e8e7ea;
             margin-top: 36px;
             text-align: center;
@@ -169,90 +161,46 @@
             transform: translateY(-25px) scale(1.05);
             transition: opacity 1.2s, transform 1.2s;
         }
-        #enter-btn {
-            margin-top: 40px;
-            padding: 14px 40px;
-            font-size: 1.2rem;
-            background: linear-gradient(90deg, #471396 0%, #113F67 100%);
-            color: #fff;
-            border: none;
-            border-radius: 40px;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.5s ease-in-out;
-            box-shadow: 0 2px 14px #47139699;
-            letter-spacing: 1px;
-            font-family: 'JF-LanYangMing-Semibold', 'Cinzel', 'Noto Sans TC', serif;
-        }
-
-        #enter-btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 20px #471396dd;
-            background: linear-gradient(90deg, #113F67 0%, #471396 100%);
-        }
 
         .pulse-animation {
             animation: pulse 2s ease-in-out infinite;
         }
-
         @keyframes pulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
+            50% { transform: translate(-50%, -50%) scale(1.03); }
         }
 
         .fade-out {
             opacity: 0 !important;
-            transform: scale(1.2) !important;
-            transition: all 1s ease-in-out !important;
+            transform: scale(1.07) !important;
+            transition: all 1s cubic-bezier(.5,.2,.1,1) !important;
         }
 
         @media (max-width: 768px) {
-            #brand { font-size: 1.5rem; }
-            #intro { font-size: 1rem; max-width: 320px; }
-            #enter-btn { padding: 12px 30px; font-size: 1rem; }
-            #logo-container { width: 140px; height: 140px; }
-            #logo-video { width: 140px; height: 140px; }
+            #logo-container { width: 98vw; max-width: 98vw; height: 34vw; min-height: 120px; }
+            #logo-video { width: 98vw; max-width: 98vw; height: 34vw; min-height: 120px; }
             #core-text { font-size: 1rem; }
+            #intro { font-size: .95rem; max-width: 90vw; }
+            #enter-btn { padding: 12px 20vw; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div id="bg-symbols"></div>
-    
     <div id="logo-area">
         <div id="logo-container">
             <!-- Logo動畫影片：請確認logo-video.mp4已上傳在同資料夾 -->
             <video id="logo-video" src="logo-video.mp4" autoplay muted loop playsinline></video>
-            <div class="sun-rays">
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-            </div>
         </div>
-        
-        <div id="brand">SAMADHI SOUL HARBOR</div>
-        
         <div id="intro">
             我如水般流動著，漸漸靠近了你<br>
             時間之河在此分岔…<br>
             所有的路都通往內在<br>
             此刻…穿越光與影的邊界
         </div>
-        
-        <!-- 核心意識文字 -->
         <div id="core-text">收束一切回歸我內心的核心意識</div>
         <button id="enter-btn">✨ 我醒了 ✨</button>
     </div>
-
     <script>
         // 漂浮的古文明圖騰（用圖片）
         function createAncientSymbols() {
@@ -288,17 +236,14 @@
                 document.getElementById('logo-container').style.opacity = '1';
             }, 400);
             setTimeout(() => {
-                document.getElementById('brand').style.opacity = '1';
+                document.getElementById('intro').style.opacity = '1';
             }, 1100);
             setTimeout(() => {
-                document.getElementById('intro').style.opacity = '1';
-            }, 1600);
-            setTimeout(() => {
                 document.getElementById('core-text').style.opacity = '1';
-            }, 2200);
+            }, 1700);
             setTimeout(() => {
                 document.getElementById('enter-btn').style.opacity = '1';
-            }, 2800);
+            }, 2200);
             setTimeout(() => {
                 document.getElementById('logo-area').classList.add('pulse-animation');
             }, 3200);
@@ -307,8 +252,8 @@
         document.getElementById('enter-btn').onclick = function() {
             document.getElementById('core-text').classList.add('core-fade-out');
             this.innerHTML = '正在喚醒...';
-            this.style.background = 'linear-gradient(90deg, #FFD700, #fff)';
-            this.style.color = '#000';
+            this.style.background = 'rgba(255,255,255,0.22)';
+            this.style.color = '#fff';
             setTimeout(() => {
                 document.getElementById('logo-area').classList.add('fade-out');
                 document.getElementById('bg-symbols').style.opacity = '0';
