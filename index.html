@@ -1,36 +1,371 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>Samadhi Soul Harbor 作品集</title>
-  <style>
-    body { font-family: Arial, Helvetica, sans-serif; background: #f7f7f7; color: #222; margin: 0; }
-    .container { max-width: 800px; margin: 40px auto; padding: 24px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
-    h1 { color: #3c5a99; }
-    .works { display: flex; flex-wrap: wrap; gap: 24px; }
-    .work { width: 220px; background: #eee; border-radius: 6px; padding: 12px; text-align: center; }
-    .work img { width: 100%; border-radius: 4px; }
-    .work-title { margin: 8px 0 0 0; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samadhi Soul Harbor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 60% 50%, #48216b 0%, #08041a 100%);
+            font-family: 'Arial', 'Noto Sans TC', sans-serif;
+        }
+
+        #bg-symbols {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .symbol {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(110, 74, 180, 0.3);
+            user-select: none;
+            animation: symbolFloat 8s ease-in-out infinite;
+            text-shadow: 0 2px 12px rgba(110, 74, 180, 0.5);
+        }
+
+        @keyframes symbolFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.2; 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg); 
+                opacity: 0.6; 
+            }
+        }
+
+        #logo-area {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+
+        #logo-container {
+            width: 180px;
+            height: 180px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            position: relative;
+        }
+
+        /* 太陽光芒 */
+        .sun-rays {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ray {
+            position: absolute;
+            background: #e8e7ea;
+            border-radius: 50px;
+            transform-origin: 50% 90px;
+            box-shadow: 0 0 10px rgba(232, 231, 234, 0.5);
+        }
+
+        /* 12個光芒 */
+        .ray:nth-child(1) { width: 4px; height: 25px; top: 0; left: 50%; transform: translateX(-50%) rotate(0deg); }
+        .ray:nth-child(2) { width: 3px; height: 18px; top: 15px; right: 25px; transform: rotate(30deg); }
+        .ray:nth-child(3) { width: 4px; height: 22px; top: 35px; right: 8px; transform: rotate(60deg); }
+        .ray:nth-child(4) { width: 3px; height: 15px; top: 50%; right: 0; transform: translateY(-50%) rotate(90deg); }
+        .ray:nth-child(5) { width: 4px; height: 22px; bottom: 35px; right: 8px; transform: rotate(120deg); }
+        .ray:nth-child(6) { width: 3px; height: 18px; bottom: 15px; right: 25px; transform: rotate(150deg); }
+        .ray:nth-child(7) { width: 4px; height: 25px; bottom: 0; left: 50%; transform: translateX(-50%) rotate(180deg); }
+        .ray:nth-child(8) { width: 3px; height: 18px; bottom: 15px; left: 25px; transform: rotate(210deg); }
+        .ray:nth-child(9) { width: 4px; height: 22px; bottom: 35px; left: 8px; transform: rotate(240deg); }
+        .ray:nth-child(10) { width: 3px; height: 15px; top: 50%; left: 0; transform: translateY(-50%) rotate(270deg); }
+        .ray:nth-child(11) { width: 4px; height: 22px; top: 35px; left: 8px; transform: rotate(300deg); }
+        .ray:nth-child(12) { width: 3px; height: 18px; top: 15px; left: 25px; transform: rotate(330deg); }
+
+        /* 中心的眼睛符號 */
+        .eye-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        .eye-outer {
+            width: 100px;
+            height: 60px;
+            border: 3px solid #e8e7ea;
+            border-radius: 50px 50px 50px 50px / 30px 30px 30px 30px;
+            position: relative;
+            background: transparent;
+            box-shadow: 0 0 15px rgba(232, 231, 234, 0.3);
+        }
+
+        .eye-waves {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 35px;
+        }
+
+        .wave-top, .wave-bottom {
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: #e8e7ea;
+            border-radius: 35px;
+            box-shadow: 0 0 8px rgba(232, 231, 234, 0.4);
+        }
+
+        .wave-top {
+            top: 10px;
+            transform: rotate(-8deg);
+        }
+
+        .wave-bottom {
+            bottom: 10px;
+            transform: rotate(8deg);
+        }
+
+        .eye-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: #e8e7ea;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(232, 231, 234, 0.6);
+        }
+
+        #brand {
+            font-family: 'Cinzel', 'Noto Sans TC', serif;
+            letter-spacing: 0.15em;
+            color: #e8e7ea;
+            font-size: 2rem;
+            margin-top: 24px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            text-shadow: 0 3px 22px #000, 0 1px 0 #6e4ab4;
+            text-align: center;
+        }
+
+        #intro {
+            margin-top: 24px;
+            font-size: 1.1rem;
+            color: #e8e7ea;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            max-width: 400px;
+            text-shadow: 0 1px 8px #08041a;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        /* 新增核心意識文字樣式 */
+        #core-text {
+            font-size: 1.2rem;
+            color: #e8e7ea;
+            margin-top: 36px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2.2s, transform 1.2s;
+            letter-spacing: 0.08em;
+            font-style: italic;
+        }
+        .core-fade-out {
+            opacity: 0 !important;
+            transform: translateY(-25px) scale(1.05);
+            transition: opacity 1.2s, transform 1.2s;
+        }
+        #enter-btn {
+            margin-top: 40px;
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, #6e4ab4 0%, #48216b 100%);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            box-shadow: 0 2px 14px rgba(72, 49, 107, 0.6);
+            letter-spacing: 1px;
+        }
+
+        #enter-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(72, 49, 107, 0.8);
+            background: linear-gradient(90deg, #7d5bc7 0%, #5a2d7e 100%);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transform: scale(1.2) !important;
+            transition: all 1s ease-in-out !important;
+        }
+
+        @media (max-width: 768px) {
+            #brand { font-size: 1.5rem; }
+            #intro { font-size: 1rem; max-width: 320px; }
+            #enter-btn { padding: 12px 30px; font-size: 1rem; }
+            #logo-container { width: 140px; height: 140px; }
+            #core-text { font-size: 1rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Samadhi Soul Harbor 作品集</h1>
-    <p>歡迎來到我的設計作品集！</p>
-    <div class="works">
-      <div class="work">
-        <img src="https://via.placeholder.com/200x150.png?text=作品1" alt="作品1">
-        <div class="work-title">作品標題 1</div>
-      </div>
-      <div class="work">
-        <img src="https://via.placeholder.com/200x150.png?text=作品2" alt="作品2">
-        <div class="work-title">作品標題 2</div>
-      </div>
-      <div class="work">
-        <img src="https://via.placeholder.com/200x150.png?text=作品3" alt="作品3">
-        <div class="work-title">作品標題 3</div>
-      </div>
+    <div id="bg-symbols"></div>
+    
+    <div id="logo-area">
+        <div id="logo-container">
+            <div class="sun-rays">
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+            </div>
+            <div class="eye-center">
+                <div class="eye-outer">
+                    <div class="eye-waves">
+                        <div class="wave-top"></div>
+                        <div class="wave-bottom"></div>
+                        <div class="eye-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="brand">SAMADHI SOUL HARBOR</div>
+        
+        <div id="intro">
+            我如水般流動著，漸漸靠近了你<br>
+            時間之河在此分岔…<br>
+            所有的路都通往內在<br>
+            此刻…穿越光與影的邊界
+        </div>
+        
+        <!-- 核心意識文字 -->
+        <div id="core-text">收束一切回歸我內心的核心意識</div>
+        <button id="enter-btn">✨ 我醒了 ✨</button>
     </div>
-  </div>
+
+    <script>
+        // 創建漂浮的古文明符號
+        function createAncientSymbols() {
+            const bg = document.getElementById('bg-symbols');
+            const ancientSymbols = ['⚛', '☯', '🕉', '⚡', '🔯', '☾', '☽', '⊕', '⊗', '◉', '◎', '⟡', '⟢', '◊', '◈', '⬢'];
+            
+            for(let i = 0; i < 12; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                symbol.textContent = ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)];
+                symbol.style.left = `${Math.random() * 90 + 5}vw`;
+                symbol.style.top = `${Math.random() * 90 + 5}vh`;
+                symbol.style.fontSize = `${20 + Math.random() * 25}px`;
+                symbol.style.animationDelay = `${Math.random() * 8}s`;
+                symbol.style.animationDuration = `${6 + Math.random() * 4}s`;
+                bg.appendChild(symbol);
+            }
+        }
+
+        // 優雅的動畫序列：logo淡入 -> 品牌字 -> 引導文案 -> 核心意識文字 -> 按鈕
+        window.addEventListener('load', function() {
+            createAncientSymbols();
+            
+            // Logo淡入
+            setTimeout(() => {
+                document.getElementById('logo-container').style.opacity = '1';
+            }, 400);
+
+            // 品牌名稱出現
+            setTimeout(() => {
+                document.getElementById('brand').style.opacity = '1';
+            }, 1100);
+
+            // 引導文案出現
+            setTimeout(() => {
+                document.getElementById('intro').style.opacity = '1';
+            }, 1600);
+
+            // 核心意識文字出現
+            setTimeout(() => {
+                document.getElementById('core-text').style.opacity = '1';
+            }, 2200);
+
+            // 按鈕出現
+            setTimeout(() => {
+                document.getElementById('enter-btn').style.opacity = '1';
+            }, 2800);
+
+            // Logo輕微脈動效果
+            setTimeout(() => {
+                document.getElementById('logo-area').classList.add('pulse-animation');
+            }, 3200);
+        });
+
+        // 進入網站（保留你的code並整合動畫）
+        document.getElementById('enter-btn').onclick = function() {
+            // 核心意識文字慢慢淡出
+            document.getElementById('core-text').classList.add('core-fade-out');
+            // 按鈕文字變化
+            this.innerHTML = '正在喚醒...';
+            this.style.background = 'linear-gradient(90deg, #FFD700, #fff)';
+            this.style.color = '#000';
+            
+            setTimeout(() => {
+                // 整體淡出效果
+                document.getElementById('logo-area').classList.add('fade-out');
+                document.getElementById('bg-symbols').style.opacity = '0';
+                
+                setTimeout(() => {
+                    // 這裡將跳轉到主網站
+                    alert('歡迎進入 Samadhi Soul Harbor！\n（這裡將連接到您的主網站）');
+                    // window.location.href = '/main-site';
+                }, 1000);
+            }, 800);
+        };
+    </script>
 </body>
 </html>
