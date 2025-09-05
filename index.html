@@ -20,12 +20,6 @@
         }
     </style>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         html, body {
             height: 100%;
             width: 100%;
@@ -34,11 +28,10 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            /* 延展玻璃感深紫藍漸層背景，可微調色系至接近影片色彩 */
-            background: radial-gradient(ellipse at 60% 30%, #231d41 0%, #113F67 60%, #471396 100%);
+            /* 深紫藍漸層背景，延展影片色彩 */
+            background: radial-gradient(ellipse at 60% 30%, #000000 0%, #124170 35%, #113F67 65%, #471396 100%);
             font-family: 'JF-LanYangMing-Book', 'Arial', 'Noto Sans TC', sans-serif;
         }
-
         #bg-symbols {
             position: absolute;
             width: 100vw;
@@ -48,21 +41,16 @@
             pointer-events: none;
             z-index: 1;
         }
-
         .symbol-img {
             position: absolute;
             user-select: none;
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.8;
             transition: opacity 1s;
             z-index: 2;
             filter: drop-shadow(0 2px 12px #47139688);
         }
-
-        .symbol {
-            display: none;
-        }
-
+        .symbol { display: none; }
         #logo-area {
             position: absolute;
             left: 50%;
@@ -74,37 +62,62 @@
             z-index: 3;
             width: 100vw;
         }
-
         #logo-container {
-            width: 320px;
-            height: 180px;
+            width: 360px;
+            height: 200px;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.5s cubic-bezier(.5,.2,.1,1);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 44px; /* 與下方文字有距離 */
+            margin-bottom: 54px; /* 與下方文字有距離 */
         }
-
         #logo-video {
-            width: 320px;
-            height: 180px;
+            width: 100%;
+            height: 100%;
             background: transparent;
             object-fit: cover;
-            box-shadow: 0 0 40px #471396cc, 0 0 120px #113F6744;
             opacity: 1;
             z-index: 2;
-            border-radius: 24px; /* 稍微圓角但不裁成圓形 */
+            border-radius: 0; /* 完全無圓角 */
+            box-shadow: none; /* 無光暈、無邊框 */
         }
-
-        /* 刪除 sun-rays 與 ray 相關樣式 */
-
-        /* 玻璃感按鈕 */
+        #intro {
+            margin-top: 0;
+            font-size: 1.13rem;
+            color: #e8e7ea;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(.5,.2,.1,1);
+            max-width: 480px;
+            text-shadow: 0 1px 8px #08041a;
+            line-height: 1.7;
+            font-family: 'JF-LanYangMing-Book', 'Noto Sans TC', 'Arial', sans-serif;
+            font-style: italic;
+            font-weight: normal;
+        }
+        #core-text {
+            font-size: 1.25rem;
+            color: #fff;
+            margin-top: 36px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.3s, transform 1.2s;
+            letter-spacing: 0.08em;
+            font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+        .core-fade-out {
+            opacity: 0 !important;
+            transform: translateY(-25px) scale(1.05);
+            transition: opacity 1.2s, transform 1.2s;
+        }
         #enter-btn {
-            margin-top: 40px;
-            padding: 16px 48px;
-            font-size: 1.2rem;
+            margin-top: 48px;
+            padding: 16px 56px;
+            font-size: 1.22rem;
             color: #fff;
             border: none;
             border-radius: 32px;
@@ -112,12 +125,22 @@
             opacity: 0;
             transition: all 0.5s cubic-bezier(.5,.2,.1,1);
             font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(18px) saturate(130%);
-            box-shadow: 0 4px 32px 0 rgba(71,19,150,0.13), 0 2px 8px 0 rgba(0,0,0,0.18);
-            border: 1.5px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.09);
+            backdrop-filter: blur(16px) saturate(130%);
+            box-shadow: 0 4px 24px 0 rgba(71,19,150,0.10), 0 2px 8px 0 rgba(0,0,0,0.13);
+            border: 1.5px solid rgba(255,255,255,0.17);
             letter-spacing: 2px;
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            /* 眨眼玻璃感動畫 */
+            animation: btn-blink 2.8s cubic-bezier(.6,.1,.1,1) infinite;
+        }
+        @keyframes btn-blink {
+            0%,100% { filter: brightness(1) blur(0px); box-shadow: 0 4px 24px 0 rgba(71,19,150,0.10), 0 2px 8px 0 rgba(0,0,0,0.13);}
+            48% { filter: brightness(1) blur(0px);}
+            51% { filter: brightness(0.7) blur(2.5px); box-shadow: 0 2px 12px 0 rgba(71,19,150,0.03), 0 1px 2px 0 rgba(0,0,0,0.09);}
+            54% { filter: brightness(1) blur(0px);}
         }
         #enter-btn:hover {
             background: rgba(255,255,255,0.18);
@@ -130,38 +153,6 @@
             box-shadow: none;
             background: rgba(255,255,255,0.22);
         }
-
-        #intro {
-            margin-top: 24px;
-            font-size: 1.15rem;
-            color: #e8e7ea;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            max-width: 450px;
-            text-shadow: 0 1px 8px #08041a;
-            line-height: 1.7;
-            font-family: 'JF-LanYangMing-Book', 'Noto Sans TC', 'Arial', sans-serif;
-            font-style: italic;
-        }
-
-        #core-text {
-            font-size: 1.25rem;
-            color: #e8e7ea;
-            margin-top: 36px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 2.2s, transform 1.2s;
-            letter-spacing: 0.08em;
-            font-family: 'JF-LanYangMing-Semibold', 'Noto Sans TC', 'Arial', sans-serif;
-            font-style: italic;
-        }
-        .core-fade-out {
-            opacity: 0 !important;
-            transform: translateY(-25px) scale(1.05);
-            transition: opacity 1.2s, transform 1.2s;
-        }
-
         .pulse-animation {
             animation: pulse 2s ease-in-out infinite;
         }
@@ -169,19 +160,17 @@
             0%, 100% { transform: translate(-50%, -50%) scale(1); }
             50% { transform: translate(-50%, -50%) scale(1.03); }
         }
-
         .fade-out {
             opacity: 0 !important;
             transform: scale(1.07) !important;
             transition: all 1s cubic-bezier(.5,.2,.1,1) !important;
         }
-
         @media (max-width: 768px) {
-            #logo-container { width: 98vw; max-width: 98vw; height: 34vw; min-height: 120px; }
-            #logo-video { width: 98vw; max-width: 98vw; height: 34vw; min-height: 120px; }
-            #core-text { font-size: 1rem; }
-            #intro { font-size: .95rem; max-width: 90vw; }
-            #enter-btn { padding: 12px 20vw; font-size: 1rem; }
+            #logo-container { width: 99vw; max-width: 99vw; height: 30vw; min-height: 120px; }
+            #logo-video { width: 99vw; max-width: 99vw; height: 30vw; min-height: 120px; }
+            #intro { font-size: .98rem; max-width: 92vw; }
+            #core-text { font-size: 1.03rem; }
+            #enter-btn { padding: 12px 18vw; font-size: 1rem; }
         }
     </style>
 </head>
@@ -189,14 +178,13 @@
     <div id="bg-symbols"></div>
     <div id="logo-area">
         <div id="logo-container">
-            <!-- Logo動畫影片：請確認logo-video.mp4已上傳在同資料夾 -->
             <video id="logo-video" src="logo-video.mp4" autoplay muted loop playsinline></video>
         </div>
         <div id="intro">
             我如水般流動著，漸漸靠近了你<br>
             時間之河在此分岔…<br>
             所有的路都通往內在<br>
-            此刻…穿越光與影的邊界
+            此刻‧穿越光與影的邊界
         </div>
         <div id="core-text">收束一切回歸我內心的核心意識</div>
         <button id="enter-btn">✨ 我醒了 ✨</button>
@@ -205,27 +193,27 @@
         // 漂浮的古文明圖騰（用圖片）
         function createAncientSymbols() {
             const bg = document.getElementById('bg-symbols');
-            const symbolCount = 10; // 你已上傳 symbol1-10
+            const symbolCount = 10;
             for(let i = 1; i <= symbolCount; i++) {
                 const img = document.createElement('img');
-                img.src = `symbol${i}.png`; // 檔名 symbol1.png, symbol2.png ... symbol10.png
+                img.src = `symbol${i}.png`;
                 img.className = 'symbol-img';
-                img.style.left = `${Math.random() * 90 + 5}vw`;
-                img.style.top = `${Math.random() * 90 + 5}vh`;
-                img.style.width = `${32 + Math.random() * 36}px`;
-                img.style.opacity = `${0.45 + Math.random() * 0.5}`;
-                img.style.animation = `symbolFloatImg ${6 + Math.random()*4}s ease-in-out infinite`;
-                img.style.animationDelay = `${Math.random() * 8}s`;
+                img.style.left = `${Math.random() * 90 + 2}vw`;
+                img.style.top = `${Math.random() * 90 + 2}vh`;
+                img.style.width = `${28 + Math.random() * 34}px`;
+                img.style.opacity = `${0.40 + Math.random() * 0.5}`;
+                img.style.animation = `symbolFloatImg ${7 + Math.random()*3}s ease-in-out infinite`;
+                img.style.animationDelay = `${Math.random() * 5}s`;
                 bg.appendChild(img);
             }
         }
 
-        // 圖騰漂浮動畫
+        // 漂浮動畫
         const style = document.createElement('style');
         style.innerHTML = `
         @keyframes symbolFloatImg {
             0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateY(-20px) rotate(30deg); opacity: 1; }
+            50% { transform: translateY(-18px) rotate(24deg); opacity: 1; }
         }
         `;
         document.head.appendChild(style);
@@ -238,6 +226,7 @@
             setTimeout(() => {
                 document.getElementById('intro').style.opacity = '1';
             }, 1100);
+            // 讓收束能量文字晚一點出現
             setTimeout(() => {
                 document.getElementById('core-text').style.opacity = '1';
             }, 1700);
