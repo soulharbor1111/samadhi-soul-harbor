@@ -131,22 +131,12 @@
             -moz-appearance: none;
             appearance: none;
         }
-
-        #logo-video::-webkit-media-controls {
-            display: none !important;
-        }
-        #logo-video::-webkit-media-controls-panel {
-            display: none !important;
-        }
-        #logo-video::-webkit-media-controls-play-button {
-            display: none !important;
-        }
-        #logo-video::-webkit-media-controls-start-playback-button {
-            display: none !important;
-        }
-        #logo-video::-moz-media-controls {
-            display: none !important;
-        }
+        
+        #logo-video::-webkit-media-controls { display: none !important; }
+        #logo-video::-webkit-media-controls-panel { display: none !important; }
+        #logo-video::-webkit-media-controls-play-button { display: none !important; }
+        #logo-video::-webkit-media-controls-start-playback-button { display: none !important; }
+        #logo-video::-moz-media-controls { display: none !important; }
 
         #intro {
             margin-top: 0;
@@ -182,8 +172,8 @@
         }
 
         #secondary-video-container {
-            width: 200px;
-            height: 150px;
+            width: 280px; /* 調整大小 */
+            height: 210px; /* 調整大小 */
             margin-bottom: 20px;
             opacity: 0;
             transition: opacity 1s ease-out;
@@ -191,8 +181,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
             overflow: hidden;
+            border-radius: 0; /* 移除圓角 */
         }
 
         #secondary-video {
@@ -205,21 +195,11 @@
             appearance: none;
         }
 
-        #secondary-video::-webkit-media-controls {
-            display: none !important;
-        }
-        #secondary-video::-webkit-media-controls-panel {
-            display: none !important;
-        }
-        #secondary-video::-webkit-media-controls-play-button {
-            display: none !important;
-        }
-        #secondary-video::-webkit-media-controls-start-playback-button {
-            display: none !important;
-        }
-        #secondary-video::-moz-media-controls {
-            display: none !important;
-        }
+        #secondary-video::-webkit-media-controls { display: none !important; }
+        #secondary-video::-webkit-media-controls-panel { display: none !important; }
+        #secondary-video::-webkit-media-controls-play-button { display: none !important; }
+        #secondary-video::-webkit-media-controls-start-playback-button { display: none !important; }
+        #secondary-video::-moz-media-controls { display: none !important; }
 
         @keyframes fadeFlicker {
             0%,100% { opacity: 0.6; }
@@ -312,7 +292,6 @@
         <div id="logo-container">
             <video id="logo-video" muted loop autoplay playsinline preload="metadata" webkit-playsinline>
                 <source src="logo-video.mp4" type="video/mp4">
-                您的瀏覽器不支援 video 標籤。
             </video>
         </div>
         <div id="intro">
@@ -325,7 +304,6 @@
         <div id="secondary-video-container">
             <video id="secondary-video" muted loop autoplay playsinline preload="metadata" webkit-playsinline>
                 <source src="logo-video-2.mp4" type="video/mp4">
-                您的瀏覽器不支援 video 標籤。
             </video>
         </div>
         <button id="enter-btn">我，醒了。</button>
@@ -367,7 +345,7 @@
         function animateSymbols() {
             window.symbolImgs.forEach(function(img, index) {
                 function starEffect() {
-                    const shouldShow = Math.random() > 0.4;
+                    const shouldShow = Math.random() > 0.6; // 調整出現機率
                     
                     if (shouldShow) {
                         const props = randomSymbolProps();
@@ -377,20 +355,20 @@
                         
                         setTimeout(() => {
                             img.style.opacity = `${props.opacity}`;
-                        }, 200);
+                        }, 500); // 調整淡入速度
                         
                         setTimeout(() => {
                             img.style.opacity = '0';
-                        }, 2000 + Math.random() * 3000);
+                        }, 5000 + Math.random() * 5000); // 調整存在時間
                     } else {
                         img.style.opacity = '0';
                     }
                     
-                    const nextDelay = 3000 + Math.random() * 4000;
+                    const nextDelay = 6000 + Math.random() * 6000; // 調整下次出現的間隔
                     setTimeout(starEffect, nextDelay);
                 }
                 
-                setTimeout(starEffect, index * 400 + Math.random() * 2000);
+                setTimeout(starEffect, index * 800 + Math.random() * 4000); // 調整初始延遲
             });
         }
 
@@ -406,7 +384,7 @@
                     video.controls = false;
                     video.removeAttribute('controls');
                     video.play().catch(e => {
-                        console.log('自動播放被阻止:', e);
+                        console.log('Autoplay was prevented:', e);
                     });
                 }
             });
@@ -418,7 +396,6 @@
             const logoVideo = document.getElementById('logo-video');
             const secondaryVideo = document.getElementById('secondary-video');
             const logoContainer = document.getElementById('logo-container');
-            const secondaryContainer = document.getElementById('secondary-video-container');
             
             [logoVideo, secondaryVideo].forEach(video => {
                 if (video) {
@@ -431,7 +408,7 @@
                     
                     video.addEventListener('canplaythrough', function() {
                         this.play().catch(e => {
-                            console.log('播放失敗:', e);
+                            console.log('Playback failed:', e);
                         });
                     });
                 }
@@ -439,7 +416,7 @@
             
             logoContainer.addEventListener('click', function() {
                 logoVideo.currentTime = 0;
-                logoVideo.play().catch(e => console.log('播放失敗:', e));
+                logoVideo.play().catch(e => console.log('Playback failed:', e));
             });
             
             setTimeout(() => {
