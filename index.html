@@ -28,44 +28,9 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #212121;
+            background: #000000;
             font-family: 'JF-LanYangMing-Book', 'Arial', 'Noto Sans TC', sans-serif;
             position: relative;
-        }
-
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-                        radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 55%);
-            animation: waveFlow 15s ease-in-out infinite;
-        }
-
-        @keyframes waveFlow {
-            0%, 100% { 
-                background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                            radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-                            radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                            radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 55%);
-            }
-            33% { 
-                background: radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-                            radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                            radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 50%),
-                            radial-gradient(circle at 10% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 55%);
-            }
-            66% { 
-                background: radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.035) 0%, transparent 60%),
-                            radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                            radial-gradient(circle at 85% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                            radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.025) 0%, transparent 55%);
-            }
         }
 
         #bg-symbols {
@@ -84,7 +49,7 @@
             pointer-events: none;
             transition: opacity 2s ease-in-out, left 4s ease-in-out, top 4s ease-in-out, width 3s ease-in-out;
             z-index: 2;
-            filter: drop-shadow(0 2px 8px rgba(255,255,255,0.1));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
             will-change: opacity, left, top, width;
             image-rendering: optimizeSpeed;
         }
@@ -172,8 +137,8 @@
         }
 
         #secondary-video-container {
-            width: 280px; /* 調整大小 */
-            height: 210px; /* 調整大小 */
+            width: 420px;
+            height: 315px;
             margin-bottom: 20px;
             opacity: 0;
             transition: opacity 1s ease-out;
@@ -182,7 +147,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border-radius: 0; /* 移除圓角 */
+            border-radius: 0;
         }
 
         #secondary-video {
@@ -278,7 +243,7 @@
         @media (max-width: 768px) {
             #logo-container { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
             #logo-video { width: 85vw; height: 85vw; max-width: 99vw; max-height: 60vw; min-height: 120px; }
-            #secondary-video-container { width: 60vw; height: 45vw; max-width: 280px; max-height: 210px; }
+            #secondary-video-container { width: 80vw; height: 60vw; max-width: 420px; max-height: 315px; }
             #intro { font-size: .98rem; max-width: 92vw; }
             #core-text { font-size: 1.03rem; }
             #enter-btn { padding: 12px 18vw; font-size: 1rem; }
@@ -286,7 +251,6 @@
     </style>
 </head>
 <body>
-    <div class="background-animation"></div>
     <div id="bg-symbols"></div>
     <div id="logo-area">
         <div id="logo-container">
@@ -315,7 +279,7 @@
             return {
                 left: Math.random() * 85 + 5,
                 top: Math.random() * 85 + 5,
-                width: 20 + Math.random() * 40,
+                width: 40 + Math.random() * 60,
                 opacity: 0.1 + Math.random() * 0.6
             };
         }
@@ -345,7 +309,7 @@
         function animateSymbols() {
             window.symbolImgs.forEach(function(img, index) {
                 function starEffect() {
-                    const shouldShow = Math.random() > 0.6; // 調整出現機率
+                    const shouldShow = Math.random() > 0.6;
                     
                     if (shouldShow) {
                         const props = randomSymbolProps();
@@ -355,20 +319,20 @@
                         
                         setTimeout(() => {
                             img.style.opacity = `${props.opacity}`;
-                        }, 500); // 調整淡入速度
+                        }, 500);
                         
                         setTimeout(() => {
                             img.style.opacity = '0';
-                        }, 5000 + Math.random() * 5000); // 調整存在時間
+                        }, 5000 + Math.random() * 5000);
                     } else {
                         img.style.opacity = '0';
                     }
                     
-                    const nextDelay = 6000 + Math.random() * 6000; // 調整下次出現的間隔
+                    const nextDelay = 6000 + Math.random() * 6000;
                     setTimeout(starEffect, nextDelay);
                 }
                 
-                setTimeout(starEffect, index * 800 + Math.random() * 4000); // 調整初始延遲
+                setTimeout(starEffect, index * 800 + Math.random() * 4000);
             });
         }
 
