@@ -403,6 +403,8 @@
             videos.forEach(video => {
                 if (video) {
                     video.muted = true;
+                    video.controls = false;
+                    video.removeAttribute('controls');
                     video.play().catch(e => {
                         console.log('自動播放被阻止:', e);
                     });
