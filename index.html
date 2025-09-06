@@ -351,8 +351,8 @@
         document.getElementById('enter-btn').onclick = function() {
             document.getElementById('core-text').classList.add('core-fade-out');
             this.innerHTML = '正在喚醒...';
-            this.style.background = 'rgba(255,255,255,0.22)';
-            this.style.color = '#fff';
+            this.style.background = 'linear-gradient(135deg, #f7dc6f 0%, #e6c458 50%, #f7dc6f 100%)';
+            this.style.color = '#1a1a1a';
             setTimeout(() => {
                 document.getElementById('logo-area').classList.add('fade-out');
                 document.getElementById('bg-symbols').style.opacity = '0';
